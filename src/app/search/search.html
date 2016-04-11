@@ -1,0 +1,39 @@
+<md-card style="height:100%">
+  <md-card-content>
+    <span x-large style="display:none">Search Here</span>
+      <form (ngSubmit)="submitState(localState.value)" autocomplete="off">
+
+      <md-input
+        id="search"
+        placeholder="Search"
+        [value]="localState.value"
+        (input)="localState.value = $event.target.value"
+        style="width:90%"
+        autofocus>
+      </md-input>
+
+      <button md-raised-button color="primary" [disabled]="localState.loading" id="search-btn">Search</button>
+    </form>
+    
+
+    <div style="display:block;text-align:center;">
+    <pre style="display:none">this.localState = {{ localState | json }}</pre>
+    <pre style="display:none">{{ localState.images | json }}</pre>
+
+    <div id="lightbox" [hidden]="!localState.selectedImg" 
+        style="text-align:center">
+      <div style="" class="lightbox-overlay"></div>
+      <button id="close-button" md-raised-button color="primary" style="float:right;margin-top:-50px" (click)="closeModal($event)"> Close </button>
+
+    </div>
+
+    <div *ngFor="#key of localState.images" style="display:inline;cursor:pointer" (click)="clicked($event)">
+      <img src={{key.urls.raw}} style="height:200px;display:inline"/>
+    </div>
+
+    <div id="empty-span" [hidden]="localState.imagesFound" x-large style="margin-top:100px;margin-bottom:100px;color:#bbb">Uh-Oh No results were found for the query {{localState.value}}</div>
+
+    </div>
+
+  </md-card-content>
+</md-card>
